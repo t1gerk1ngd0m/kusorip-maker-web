@@ -1,8 +1,7 @@
-import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { useQuery, gql } from '@apollo/client';
-import logo from './logo.svg';
 import './App.css';
-import { captureRejectionSymbol } from 'node:events';
+import TopPage from './TopPage'
 
 const EXCHANGE_RATES = gql`
   query GetExchangeRates {
@@ -13,29 +12,12 @@ const EXCHANGE_RATES = gql`
   }
 `;
 
-function App() {
-  const { loading, error, data } = useQuery(EXCHANGE_RATES);
+const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        {data.rates.map(({ currency, rate }: any) => (
-          <div key={currency}>
-            <p>{currency}: {rate}</p>
-          </div>
-        ))}
-      </header>
+      <Router>
+        <Route path='/' component={TopPage}/>
+      </Router>
     </div>
   );
 }
