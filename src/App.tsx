@@ -1,8 +1,20 @@
 import React from 'react';
+import { useQuery, gql } from '@apollo/client';
 import logo from './logo.svg';
 import './App.css';
+import { captureRejectionSymbol } from 'node:events';
+
+const EXCHANGE_RATES = gql`
+  query GetExchangeRates {
+    rates(currency: "USD") {
+      currency
+      rate
+    }
+  }
+`;
 
 function App() {
+  const { loading, error, data } = useQuery(EXCHANGE_RATES);
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +30,11 @@ function App() {
         >
           Learn React
         </a>
+        {data.rates.map(({ currency, rate }: any) => (
+          <div key={currency}>
+            <p>{currency}: {rate}</p>
+          </div>
+        ))}
       </header>
     </div>
   );
