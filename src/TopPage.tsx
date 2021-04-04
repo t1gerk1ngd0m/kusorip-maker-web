@@ -2,8 +2,19 @@ import kusorepMan from './images/kusorep_man.png'
 import './App.css';
 import { useQuery, gql } from '@apollo/client';
 
+const ROOMS = gql`
+  query {
+    rooms {
+      nodes {
+        id
+      }
+    }
+  }
+`;
 
 const TopPage = () => {
+  const { loading, error, data } = useQuery(ROOMS);
+  console.log(data)
   return (
     <>
       <div>
