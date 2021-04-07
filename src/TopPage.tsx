@@ -4,12 +4,12 @@ import './App.css';
 import { useMutation, gql } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
 
-type Input = {
+type NewRoomAndMemberInput = {
   name: String
 }
 
 const NEW_ROOM_AND_MEMBER = gql`
-  mutation NewRoomAndMember($input: Input) {
+  mutation NewRoomAndMember($input: NewRoomAndMemberInput!) {
     newRoomAndMember(input: $input) {
       room {
         id
@@ -28,7 +28,7 @@ const TopPage = () => {
 
   useEffect(() => {
     console.log(data)
-    if (!loading && data) history.push(`/rooms/${data.newRoom.room.id}`)
+    if (!loading && data) history.push(`/rooms/${data.newRoomAndMember.room.id}`)
   }, [loading, data])
   return (
     <>
@@ -39,8 +39,9 @@ const TopPage = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault()
+          console.log(organizerName)
           newRoomAndMember({variables: {
-            name: organizerName
+            input: { name: organizerName }
           }})
         }}
         className="form-panel"
