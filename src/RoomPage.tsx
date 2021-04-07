@@ -1,10 +1,28 @@
-import kusorepMan from './images/kusorep_man.png'
 import './App.css';
 
 const RoomPage = () => {
-  console.log('qqq')
   return (
-    <div>aaa</div>
+    <>
+      <div>
+        <h1>メンバー登録</h1>
+        <p>名前を入力してルームに入室してください</p>
+      </div>
+      <form className="form-panel">
+        <div className="form-group">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="あなたの名前"
+          />
+        </div>
+        <button
+          className="btn btn-blue btn-lg"
+          type="submit"
+        >
+          ルームに入室する
+        </button>
+      </form>
+    </>
   )
 }
 
