@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import kusorepMan from './images/kusorep_man.png'
 import './App.css';
 import { useMutation, gql } from '@apollo/client';
