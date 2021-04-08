@@ -20,7 +20,7 @@ const TopPage = () => {
 
   useEffect(() => {
     console.log(data)
-    if (!loading && data) history.push(`/rooms/${data.newRoom.room.id}`)
+    if (!loading && data) history.push(`/rooms/${data.newRoom.room.id}/members/new`)
   }, [loading, data])
   return (
     <>

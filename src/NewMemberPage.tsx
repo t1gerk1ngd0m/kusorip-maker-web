@@ -1,6 +1,7 @@
 import './App.css';
 import { useState, useEffect } from 'react';
 import { useMutation, gql } from '@apollo/client';
+import { useHistory } from 'react-router-dom';
 
 type NewMemberInput = {
   name: String
@@ -19,6 +20,7 @@ const NEW_MEMBER = gql`
 `
 
 const NewMemberPage = () => {
+  const history = useHistory();
   const [memberName, setMemberName] = useState('')
   const [newMember, { loading, error, data }] = useMutation(NEW_MEMBER);
 
