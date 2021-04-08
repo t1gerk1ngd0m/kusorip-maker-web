@@ -70,7 +70,7 @@
 }
 
 .form-panel {
-  width: 50%;
+  width: 70%;
   margin: 0 auto;
 }
 
@@ -91,4 +91,43 @@
   border: 1px solid #ced4da;
   border-radius: .25rem;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.form-text {
+  padding: .375rem .75rem;
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.form-text {
+  padding: 1em 1em;
+}
+
+.table {
+  margin: 0 auto;
+}
+
+.theme-box {
+  padding: 1em 1em;
+  font-weight: bold;
+  font-size: 24px;
+  color: #6091d3;/*文字色*/
+  background: #FFF;
+  border: solid 3px #6091d3;/*線*/
+  border-radius: 10px;/*角の丸み*/
+  width: 70%;
+  margin: 2em auto ;
+}
+
+.theme-box p {
+  margin: 0;
+  padding: 0;
 }
