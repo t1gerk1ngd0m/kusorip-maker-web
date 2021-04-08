@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import TopPage from './TopPage'
-import RoomPage from './RoomPage'
+import NewMemberPage from './NewMemberPage'
 
 const App = () => {
   return (
@@ -12,7 +12,7 @@ const App = () => {
             <TopPage/>
           </Route>
           <Route path='/rooms/:id'>
-            <RoomPage/>
+            <NewMemberPage/>
           </Route>
         </Switch>
       </BrowserRouter>

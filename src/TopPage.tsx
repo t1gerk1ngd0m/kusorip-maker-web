@@ -4,31 +4,23 @@ import './App.css';
 import { useMutation, gql } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
 
-type NewRoomAndMemberInput = {
-  name: String
-}
-
-const NEW_ROOM_AND_MEMBER = gql`
-  mutation NewRoomAndMember($input: NewRoomAndMemberInput!) {
-    newRoomAndMember(input: $input) {
+const NEW_ROOM = gql`
+  mutation {
+    newRoom(input: {}) {
       room {
         id
       }
-      member {
-        name
-      }
     }
   }
-`;
+`
 
 const TopPage = () => {
   const history = useHistory();
-  const [newRoomAndMember, { loading, error, data }] = useMutation(NEW_ROOM_AND_MEMBER);
-  const [organizerName, setOrganizerName] = useState('')
+  const [newRoom, { loading, error, data }] = useMutation(NEW_ROOM);
 
   useEffect(() => {
     console.log(data)
-    if (!loading && data) history.push(`/rooms/${data.newRoomAndMember.room.id}`)
+    if (!loading && data) history.push(`/rooms/${data.newRoom.room.id}`)
   }, [loading, data])
   return (
     <>
@@ -36,32 +28,15 @@ const TopPage = () => {
         <h1>クソリプメーカー</h1>
         <p>あなたも品性のあるクソリプを</p>
       </div>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault()
-          console.log(organizerName)
-          newRoomAndMember({variables: {
-            input: { name: organizerName }
-          }})
+      <button
+        className="btn btn-blue btn-lg"
+        type="submit"
+        onClick={() => {
+          newRoom()
         }}
-        className="form-panel"
       >
-        <div className="form-group">
-          <input
-            type="text"
-            className="form-control"
-            value={organizerName}
-            onChange={(e) => setOrganizerName(e.target.value)}
-            placeholder="あなたの名前"
-          />
-        </div>
-        <button
-          className="btn btn-blue btn-lg"
-          type="submit"
-        >
-          ルームを作成する
-        </button>
-      </form>
+        ルームを作成する
+      </button>
       <div><img src={kusorepMan} alt="クソリプマン"/></div>
     </>
   );

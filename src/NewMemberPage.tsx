@@ -1,6 +1,6 @@
 import './App.css';
 
-const RoomPage = () => {
+const NewMemberPage = () => {
   return (
     <>
       <div>
@@ -26,4 +26,4 @@ const RoomPage = () => {
   )
 }
 
-export default RoomPage;
+export default NewMemberPage;
