@@ -16,10 +16,9 @@ const NEW_ROOM = gql`
 
 const TopPage = () => {
   const history = useHistory();
-  const [newRoom, { loading, error, data }] = useMutation(NEW_ROOM);
+  const [newRoom, { loading, data }] = useMutation(NEW_ROOM);
 
   useEffect(() => {
-    console.log(data)
     if (!loading && data) history.push(`/rooms/${data.newRoom.room.id}/members/new`)
   }, [loading, data])
   return (
