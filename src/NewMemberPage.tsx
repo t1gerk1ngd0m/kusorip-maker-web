@@ -1,11 +1,16 @@
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useMutation, gql } from '@apollo/client';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 type NewMemberInput = {
   name: String
   roomId: String
+}
+
+type ParamTypes = {
+  id: string
 }
 
 const NEW_MEMBER = gql`
@@ -22,17 +27,26 @@ const NEW_MEMBER = gql`
 const NewMemberPage = () => {
   const history = useHistory();
   const [memberName, setMemberName] = useState('')
-  const [newMember, { loading, error, data }] = useMutation(NEW_MEMBER);
-
-  useEffect(() => {
-    if (!loading && data) history.push(`/rooms/${data.newRoom.room.id}`)
-  })
+  const [newMember] = useMutation(NEW_MEMBER);
+  const url = window.location.href
+  const { id } = useParams<ParamTypes>()
 
   return (
     <>
       <div>
         <h1>メンバー登録</h1>
         <p>名前を入力してルームに入室してください</p>
+        <p>招待する場合はこのページのURLをコピーしてください</p>
+        <CopyToClipboard
+          text={url}
+          onCopy={() => alert(`クリップボードにurlをコピーしました！\n${url}`)}
+        >
+          <button
+            className="btn btn-blue"
+          >
+            URLをコピー
+          </button>
+        </CopyToClipboard>
       </div>
       <form className="form-panel">
         <div className="form-group">
@@ -48,8 +62,12 @@ const NewMemberPage = () => {
           type="submit"
           onClick={() => {
             newMember({variables: {
-              input: { name: memberName }
+              input: {
+                name: memberName,
+                roomId: id,
+              }
             }})
+            history.push(`/rooms/${id}`)
           }}
         >
           ルームに入室する
