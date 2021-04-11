@@ -3,6 +3,7 @@ import './App.css';
 import TopPage from './TopPage'
 import NewMemberPage from './NewMemberPage'
 import RoomMemberPage from './RoomMemberPage'
+import KusorepIndexPage from './KusorepIndexPage'
 
 const App = () => {
   return (
@@ -11,6 +12,9 @@ const App = () => {
         <Switch>
           <Route path='/rooms/:id/members/new'>
             <NewMemberPage/>
+          </Route>
+          <Route path='/rooms/:id/kusoreps'>
+            <KusorepIndexPage/>
           </Route>
           <Route path='/rooms/:id/members/:memberId'>
             <RoomMemberPage/>

@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -12,9 +12,15 @@ type ParamTypes = {
   memberId: string
 }
 
+type NewKusorepInput = {
+  content: string
+  memberId: string
+}
+
 const FETCH_ROOM_MEMBERS = gql`
   query Room($id: ID!) {
     room(id: $id) {
+      theme
       members {
         id
         name
@@ -23,15 +29,27 @@ const FETCH_ROOM_MEMBERS = gql`
   }
 `
 
+const NEW_KUSOREP = gql`
+  mutation NewKusorep($input: NewKusorepInput!) {
+    newKusorep(input: $input) {
+      kusorep {
+        id
+        content
+      }
+    }
+  }
+`
+
 const RoomMemberPage = () => {
+  const history = useHistory();
   const { id: roomId, memberId } = useParams<ParamTypes>()
-  const { loading, error, data } = useQuery(FETCH_ROOM_MEMBERS, {
+  const [kusorep, setKusprep] = useState('')
+  const { data } = useQuery(FETCH_ROOM_MEMBERS, {
     variables: {
       id: roomId
     },
   });
-  console.log(roomId)
-  console.log(memberId)
+  const [newKusorep, { loading, error, data: mutationData }] = useMutation(NEW_KUSOREP);
 
   return (
     <>
@@ -50,7 +68,7 @@ const RoomMemberPage = () => {
         </tbody>
       </table>
       <div className="theme-box">
-        <p>真赤でおいしそうなリンゴを見つけたので買ってきた。食べるの楽しみ～！</p>
+        <p>{data && data.room.theme}</p>
       </div>
       <form className="form-panel">
         <div className="form-group">
@@ -59,11 +77,21 @@ const RoomMemberPage = () => {
             rows={10}
             placeholder="クソリプおじさんになりきってクソリプを書こう！"
             className="form-text"
+            onChange={(e) => setKusprep(e.target.value)}
           ></textarea>
         </div>
         <button
           className="btn btn-blue btn-lg"
-          type="submit"
+          type="button"
+          onClick={() => {
+            newKusorep({variables: {
+              input: {
+                content: kusorep,
+                memberId: memberId,
+              }
+            }})
+            history.push(`/rooms/${roomId}/kusoreps`)
+          }}
         >
           クソリプする
         </button>
