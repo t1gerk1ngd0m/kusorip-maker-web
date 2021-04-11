@@ -1,9 +1,38 @@
 import './App.css';
 import { useState, useEffect } from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
-const RoomPage = () => {
+type ID = {
+  id: string
+}
+
+type ParamTypes = {
+  id: string,
+  memberId: string
+}
+
+const FETCH_ROOM_MEMBERS = gql`
+  query Room($id: ID!) {
+    room(id: $id) {
+      members {
+        id
+        name
+      }
+    }
+  }
+`
+
+const RoomMemberPage = () => {
+  const { id: roomId, memberId } = useParams<ParamTypes>()
+  const { loading, error, data } = useQuery(FETCH_ROOM_MEMBERS, {
+    variables: {
+      id: roomId
+    },
+  });
+  console.log(roomId)
+  console.log(memberId)
+
   return (
     <>
       <div>
@@ -15,9 +44,9 @@ const RoomPage = () => {
           <tr><th>このルームにいるのは？</th></tr>
         </thead>
         <tbody>
-          <tr><td>クソリプおじさん</td></tr>
-          <tr><td>クソリプおばさん</td></tr>
-          <tr><td>クソリプ小僧</td></tr>
+          {data && data.room.members.map((member: any) => (
+            <tr key={member.id}><td>{member.name}</td></tr>
+          ))}
         </tbody>
       </table>
       <div className="theme-box">
@@ -43,4 +72,4 @@ const RoomPage = () => {
   )
 }
 
-export default RoomPage;
+export default RoomMemberPage;
