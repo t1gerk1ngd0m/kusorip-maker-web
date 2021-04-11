@@ -48,6 +48,7 @@ const RoomMemberPage = () => {
     variables: {
       id: roomId
     },
+    pollInterval: 5000,
   });
   const [newKusorep] = useMutation(NEW_KUSOREP);
 
