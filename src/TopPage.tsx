@@ -21,6 +21,7 @@ const TopPage = () => {
   useEffect(() => {
     if (!loading && data) history.push(`/rooms/${data.newRoom.room.id}/members/new`)
   }, [loading, data])
+
   return (
     <>
       <div>
@@ -29,7 +30,7 @@ const TopPage = () => {
       </div>
       <button
         className="btn btn-blue btn-lg"
-        type="submit"
+        type="button"
         onClick={() => {
           newRoom()
         }}
