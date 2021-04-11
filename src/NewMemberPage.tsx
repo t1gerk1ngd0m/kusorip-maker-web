@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMutation, gql } from '@apollo/client';
 import { useHistory, useParams } from 'react-router-dom';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -27,9 +27,13 @@ const NEW_MEMBER = gql`
 const NewMemberPage = () => {
   const history = useHistory();
   const [memberName, setMemberName] = useState('')
-  const [newMember] = useMutation(NEW_MEMBER);
+  const [newMember, { loading, error, data }] = useMutation(NEW_MEMBER);
   const url = window.location.href
   const { id } = useParams<ParamTypes>()
+
+  useEffect(() => {
+    if (data?.newMember?.member?.id) history.push(`/rooms/${id}/members/${data.newMember.member.id}`)
+  }, [data])
 
   return (
     <>
@@ -59,7 +63,7 @@ const NewMemberPage = () => {
         </div>
         <button
           className="btn btn-blue btn-lg"
-          type="submit"
+          type="button"
           onClick={() => {
             newMember({variables: {
               input: {
@@ -67,7 +71,6 @@ const NewMemberPage = () => {
                 roomId: id,
               }
             }})
-            history.push(`/rooms/${id}`)
           }}
         >
           ルームに入室する
