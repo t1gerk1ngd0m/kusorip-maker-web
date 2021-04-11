@@ -27,7 +27,7 @@ const NEW_MEMBER = gql`
 const NewMemberPage = () => {
   const history = useHistory();
   const [memberName, setMemberName] = useState('')
-  const [newMember, { loading, error, data }] = useMutation(NEW_MEMBER);
+  const [newMember, { data }] = useMutation(NEW_MEMBER);
   const url = window.location.href
   const { id } = useParams<ParamTypes>()
 

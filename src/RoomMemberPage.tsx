@@ -49,7 +49,7 @@ const RoomMemberPage = () => {
       id: roomId
     },
   });
-  const [newKusorep, { loading, error, data: mutationData }] = useMutation(NEW_KUSOREP);
+  const [newKusorep] = useMutation(NEW_KUSOREP);
 
   return (
     <>

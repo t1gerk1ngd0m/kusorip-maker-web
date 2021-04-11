@@ -46,7 +46,7 @@ const KusorepIndexPage = () => {
     },
     pollInterval: 5000,
   });
-  const [voteKusorep, { loading, error, data: mutationData }] = useMutation(VOTE_KUSOREP);
+  const [voteKusorep] = useMutation(VOTE_KUSOREP);
 
   return (
     <>
