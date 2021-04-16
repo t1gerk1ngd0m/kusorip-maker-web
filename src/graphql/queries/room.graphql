@@ -1,0 +1,8 @@
+query room($roomId: ID!) {
+  room(id: $roomId) {
+    id
+    theme
+    createdAt
+    updatedAt
+  }
+}
